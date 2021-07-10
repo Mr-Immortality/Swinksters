@@ -1,0 +1,97 @@
+<template>
+    <admin-layout>
+        <template #header>
+            <div class="flex justify-between items-center">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Roles
+                </h2>
+                <blue-button
+                    :href="route('admin.roles.create')"
+                    class="text-sm"
+                    v-if="$page.props.auth.can.manageRoles"
+                    >Create</blue-button
+                >
+            </div>
+        </template>
+
+        <div class="text-center my-4" v-if="$page.props.success">
+            <span class="text-2xl bg-blue-500 text-gray-50 px-2 rounded-md">{{
+                $page.props.success
+            }}</span>
+        </div>
+
+        <div class="px-6 py-2">
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left pl-3">Name</th>
+                        <th class="text-left pl-3">Created</th>
+                        <th
+                            class="text-right pr-4"
+                            v-if="$page.props.auth.can.manageRoles"
+                        >
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="(role, index) in roles"
+                        :key="index"
+                        class="text-center hover:bg-gray-600 hover:text-gray-50"
+                        :class="{ 'bg-gray-300': index % 2 === 0 }"
+                    >
+                        <td class="text-left capitalize py-3 pl-3">
+                            {{ role.name }}
+                        </td>
+                        <td class="text-left py-3 pl-3">
+                            {{ role.created_at }}
+                        </td>
+                        <td
+                            class="py-3"
+                            v-if="$page.props.auth.can.manageRoles"
+                        >
+                            <div class="flex justify-end pr-3">
+                                <green-button
+                                    :href="route('admin.roles.show', role.id)"
+                                    class="text-sm ml-3"
+                                    >Edit</green-button
+                                >
+                                <form @submit.prevent="submit(role.id)">
+                                    <jet-danger-button
+                                        type="submit"
+                                        class="text-sm ml-2"
+                                        >Delete</jet-danger-button
+                                    >
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </admin-layout>
+</template>
+
+<script>
+import AdminLayout from "../../../Layouts/AdminLayout.vue";
+import Welcome from "../../Welcome.vue";
+import BlueButton from "../../../Components/Buttons/BlueButton.vue";
+import GreenButton from "../../../Components/Buttons/GreenButton.vue";
+import JetDangerButton from "../../../Jetstream/DangerButton";
+export default {
+    props: ["roles"],
+    components: {
+        AdminLayout,
+        Welcome,
+        BlueButton,
+        GreenButton,
+        JetDangerButton
+    },
+    methods: {
+        submit(id) {
+            this.$inertia.delete(this.route("admin.roles.destroy", id));
+        }
+    }
+};
+</script>
