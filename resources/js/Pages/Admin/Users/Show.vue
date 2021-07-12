@@ -84,7 +84,7 @@
                         ></jet-label>
                         <jet-input
                             id="banned_until"
-                            type="timestamp"
+                            type="date"
                             class="mt-2 block w-full"
                             v-model="form.banned_until"
                             autofocus

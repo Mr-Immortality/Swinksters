@@ -25,7 +25,7 @@ class IsUserBanned
             }
             if (now()->lessThan(auth()->user()->banned_until)) {
                 $banned_days = now()->diffInDays(auth()->user()->banned_until) + 1;
-                $message = 'Your account has been suspended for ' . $banned_days . ' ' . Str::plural('day', $banned_days);
+                $message = 'Your account has been suspended for ' . $banned_days . ' ' . Str::plural('day', $banned_days).'. Please contact an administrator.';
             }
 
             return redirect()->route('login')->with(auth('web')->logout())->with('message', $message);

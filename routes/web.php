@@ -28,7 +28,6 @@ use App\Http\Controllers\Admins\AdminDashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Artisan::call('storage:link');
 
 Route::middleware(['guest'])->get('/', [WelcomeController::class, 'show'])->name('welcome');
 

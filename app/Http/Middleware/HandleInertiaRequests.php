@@ -57,7 +57,8 @@ class HandleInertiaRequests extends Middleware
                 return Session::get('success')
                 ? Session::get('success')
                 : null;
-            }
+            },
+            'message' => session('message')
         ]);
     }
 }

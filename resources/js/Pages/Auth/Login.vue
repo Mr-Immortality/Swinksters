@@ -12,6 +12,13 @@
             {{ status }}
         </div>
 
+        <div
+            v-if="$page.props.message"
+            class="mb-4 font-medium text-sm text-red-600 font-bold"
+        >
+            {{ $page.props.message }}
+        </div>
+
         <form @submit.prevent="submit">
             <div>
                 <jet-label for="email" value="Email" />
@@ -85,7 +92,8 @@ export default {
 
     props: {
         canResetPassword: Boolean,
-        status: String
+        status: String,
+        message: String
     },
 
     data() {

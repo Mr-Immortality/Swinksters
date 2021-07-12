@@ -81,17 +81,30 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user) {
-        if (Gate::allows('manageUsers')) {
-            $role = Role::where('name', $request->roles[0][0]['name'])->first();
-            if ($user->is_admin != 1 && $role->name != 'user') {
-                $user->roles()->sync($role);
-                $user->update(['is_admin' => 1]);
+        public function update(Request $request, User $user) {
+        
+            if (Gate::allows('manageUsers')) {
+                if(!$user) {
+                    return back();
+                } else {
+                    $role = Role::where('name', $request->roles[0][0]['name'])->first();
+                    if ($user->is_admin != 1 && $role->name != 'user') {
+                        $user->roles()->sync($role);
+                        $user->update([
+                            'is_admin' => 1,
+                            'banned_until' => $request->banned_until,
+                        ]);
+                    } else {
+                        $user->update([
+                            'banned_until' => $request->banned_until,
+                        ]);
+                    }
+                    return redirect()->route('admin.users.index')->withSuccess(ucwords($user->name).' has been successfully updated!');
+                }
             }
-            return redirect()->route('admin.users.index')->withSuccess(ucwords($user->name).' has been successfully updated!');
+            return back();
         }
-        return back();
-    }
+    
 
     /**
      * Remove the specified resource from storage.

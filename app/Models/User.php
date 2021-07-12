@@ -34,7 +34,7 @@ class User extends Authenticatable
         'is_admin',
         'password',
         'username',
-        'banned_till',
+        'banned_until',
     ];
 
     /**
