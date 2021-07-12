@@ -14,7 +14,10 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6" v-if="hasActions">
+                    <div
+                        class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6"
+                        v-if="hasActions"
+                    >
                         <slot name="actions"></slot>
                     </div>
                 </div>
@@ -24,17 +27,17 @@
 </template>
 
 <script>
-    import JetSectionTitle from './SectionTitle'
+import JetSectionTitle from "./SectionTitle";
 
-    export default {
-        components: {
-            JetSectionTitle,
-        },
+export default {
+    components: {
+        JetSectionTitle
+    },
 
-        computed: {
-            hasActions() {
-                return !! this.$slots.actions
-            }
+    computed: {
+        hasActions() {
+            return !!this.$slots.actions;
         }
     }
+};
 </script>
